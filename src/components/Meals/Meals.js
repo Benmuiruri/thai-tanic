@@ -1,6 +1,7 @@
+import React from 'react';
 import AvailableMeals from './AvailableMeals';
-
 import MealsDescription from './MealsDescription';
+
 const Meals = () => {
   return (
     <>

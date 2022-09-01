@@ -1,5 +1,6 @@
 import MealItemForm from './MealItemForm';
 import classes from './MealItem.module.css';
+import React from 'react';
 
 const MealItem = (props) => {
   const price = `$${props.price.toFixed(2)}`;
