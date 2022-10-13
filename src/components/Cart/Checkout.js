@@ -73,7 +73,13 @@ const Checkout = (props) => {
       return;
     }
 
-    // console.log(enteredFirstName + ' ' + enteredLastName + ' ' + enteredEmail);
+    props.onConfirm({
+      name: enteredName,
+      email: enteredEmail,
+      street: enteredStreetName,
+      postalCode: enteredPostalCode,
+      city: enteredCityName,
+    });
 
     resetnameInput();
     resetEmailInput();
