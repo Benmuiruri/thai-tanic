@@ -16,7 +16,7 @@
 
 .control input {
   font: inherit;
-  border: 1px solid #ccc;
+  border: 1px solid #74a35a;
   border-radius: 4px;
   width: 20rem;
   max-width: 100%;
@@ -36,6 +36,15 @@
   padding: 0.5rem 2rem;
   border-radius: 25px;
   margin-left: 1rem;
+}
+
+.actions button:disabled,
+.actions button:disabled:hover,
+.actions button:disabled:active {
+  background-color: #ccc;
+  border-color: #ccc;
+  color: #292929;
+  cursor: not-allowed;
 }
 
 .actions button:hover,
@@ -62,6 +71,15 @@
 }
 
 .invalid input {
-  border-color: #aa0b20;
-  background-color: #ffeff1;
+  border: 1px solid #b40e0e;
+  background-color: #fddddd;
+}
+
+.invalid input:focus {
+  border-color: #ff8800;
+  background-color: #fbe8d2;
+}
+
+.error_text {
+  color: #b40e0e;
 }
