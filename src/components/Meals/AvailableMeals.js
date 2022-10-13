@@ -3,9 +3,12 @@ import Card from '../UI/Card';
 import MealItem from './MealItem/MealItem';
 import classes from './AvailableMeals.module.css';
 import React, { useEffect, useState } from 'react';
+import { InfinitySpin } from 'react-loader-spinner';
 
 const AvailableMeals = () => {
   const [meals, setMeals] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const fetchMeals = async () => {
       const response = await fetch(
@@ -24,9 +27,22 @@ const AvailableMeals = () => {
         });
       }
       setMeals(loadedMeals);
+      setIsLoading(false);
     };
     fetchMeals();
   }, []);
+
+  if (isLoading) {
+    return (
+      <section className={classes.MealsLoading}>
+        <InfinitySpin
+          width='200'
+          color='#4fa94d'
+          ariaLabel='infinity-loading'
+        />
+      </section>
+    );
+  }
 
   const mealsList = meals.map((meal) => (
     <MealItem
