@@ -1,5 +1,12 @@
 import React from 'react';
 import classes from './Checkout.module.css';
+import useInput from '../../hooks/use-input';
+
+const isValidText = (value) => value.trim() !== '';
+
+const validRegex =
+  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+const isValidEmail = (value) => value.trim().match(validRegex);
 
 const Checkout = (props) => {
   const orderConfirmHandler = (event) => {
