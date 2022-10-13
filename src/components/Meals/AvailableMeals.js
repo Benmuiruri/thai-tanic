@@ -1,45 +1,34 @@
+// @ts-nocheck
 import Card from '../UI/Card';
 import MealItem from './MealItem/MealItem';
 import classes from './AvailableMeals.module.css';
-import React from 'react';
-
-const DUMMY_MEALS = [
-  {
-    id: 'meal1',
-    name: 'Prawns in Tamarid sauce',
-    description: 'Stir fried prawns with roasted chilli',
-    price: 9.99,
-  },
-  {
-    id: 'meal2',
-    name: 'Pork skewers',
-    description:
-      'Pork on skewer marinated with Thai spice and coconut served with peanut sauce',
-    price: 19.99,
-  },
-  {
-    id: 'meal3',
-    name: 'Beef with oyster sauce ',
-    description: 'Beef with mushroom, spring onion and bel pepper',
-    price: 9.59,
-  },
-  {
-    id: 'meal4',
-    name: 'Pad Thai vegetarian',
-    description: 'Healthy...and green...',
-    price: 8.99,
-  },
-  {
-    id: 'meal5',
-    name: 'Green curry',
-    description:
-      'Famous Thai green curry with coconut milk, bamboo shoot and basil with your choice of chicken, beef or pork. Serve with your choice of rice or noodles',
-    price: 12.99,
-  },
-];
+import React, { useEffect, useState } from 'react';
 
 const AvailableMeals = () => {
-  const mealsList = DUMMY_MEALS.map((meal) => (
+  const [meals, setMeals] = useState([]);
+  useEffect(() => {
+    const fetchMeals = async () => {
+      const response = await fetch(
+        'https://react-db-connection-f78e5-default-rtdb.firebaseio.com/thai-tanic/meals.json'
+      );
+      const responseData = await response.json();
+
+      const loadedMeals = [];
+
+      for (const key in responseData) {
+        loadedMeals.push({
+          id: key,
+          name: responseData[key].name,
+          description: responseData[key].description,
+          price: responseData[key].price,
+        });
+      }
+      setMeals(loadedMeals);
+    };
+    fetchMeals();
+  }, []);
+
+  const mealsList = meals.map((meal) => (
     <MealItem
       id={meal.id}
       key={meal.id}
