@@ -6,6 +6,8 @@ Thai Tanic is a pun-tastic React web application that allows uses to make orders
 
 <img src="./src/assets/thai_tanic.png">
 
+<img src="./src/assets/foodcart.png">
+
 ## Built With
 
 - **REACT** and **CSS** and **Javascript**
