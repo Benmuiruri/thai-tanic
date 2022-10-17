@@ -44,3 +44,8 @@
   background-color: #FF7721;
   color: white;
 }
+
+.requestError {
+  text-align: center;
+  color: red;
+}

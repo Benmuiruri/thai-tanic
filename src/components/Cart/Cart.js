@@ -10,7 +10,7 @@ const Cart = (props) => {
   const [isCheckout, setIsCheckout] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [didSubmit, setDidSubmit] = useState(false);
-  // const [httpError, setHttpError] = useState();
+  const [httpError, setHttpError] = useState();
   const cartCtx = useContext(CartContext);
   const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
   const hasItems = cartCtx.items.length > 0;
@@ -27,25 +27,26 @@ const Cart = (props) => {
     setIsCheckout(true);
   };
 
-  const submitOrderHandler = async (userData) => {
+  const submitOrderHandler = () => {
     setIsSubmitting(true);
-    const response = await fetch(
-      'https://react-db-connection-f78e5-default-rtdb.firebaseio.com/thai-tanic/orders.json',
+    fetch(
+      'hps://react-db-connection-f78e5-default-rtdb.firebaseio.com/orders.json',
       {
         method: 'POST',
         body: JSON.stringify({
-          user: userData,
+          user: cartCtx.user,
           orderedItems: cartCtx.items,
         }),
       }
-    );
-
-    // if (!response.ok) {
-    //   throw new Error('Something went wrong!');
-    // }
-
-    setIsSubmitting(false);
-    setDidSubmit(true);
+    )
+      .then((response) => {
+        setIsSubmitting(false);
+        setDidSubmit(true);
+      })
+      .catch((error) => {
+        setIsSubmitting(false);
+        setHttpError(error.message);
+      });
   };
   const cartItems = (
     <ul className={classes['cart-items']}>
@@ -101,11 +102,16 @@ const Cart = (props) => {
     </>
   );
 
-  return <Modal onClose={props.onClose}>
-    {!isSubmitting && !didSubmit && cartModalContent}
-    {isSubmitting && isSubmittingModalContent}
-    {!isSubmitting && didSubmit && didSubmitModalContent}
-  </Modal>;
+  return (
+    <Modal onClose={props.onClose}>
+      {!isSubmitting && !didSubmit && cartModalContent}
+      {isSubmitting && isSubmittingModalContent}
+      {!isSubmitting && didSubmit && didSubmitModalContent}
+      {!isSubmitting && httpError && (
+        <p className={classes.requestError}>{httpError}</p>
+      )}
+    </Modal>
+  );
 };
 
 export default Cart;
