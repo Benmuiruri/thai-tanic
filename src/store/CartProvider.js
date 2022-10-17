@@ -34,24 +34,29 @@ const cartReducer = (state, action) => {
         totalAmount: updatedTotalAmount,
       };
     case 'REMOVE_ITEM':
-       const existingCartItemIndexToDelete = state.items.findIndex(
-         (item) => item.id === action.id
-       );
-        const existingCartItemToDelete =
-          state.items[existingCartItemIndexToDelete];
-        const newTotalAmount = state.totalAmount - existingCartItemToDelete.price;
-        let newUpdatedItems;
-        if (existingCartItemToDelete.amount === 1) {
-          newUpdatedItems = state.items.filter(item => item.id !== action.id);
-        } else {
-          const newUpdatedItem = {...existingCartItemToDelete, amount: existingCartItemToDelete.amount - 1};
-          newUpdatedItems = [...state.items];
-          newUpdatedItems[existingCartItemIndexToDelete] = newUpdatedItem;
-        }
-        return {
-          items: newUpdatedItems,
-          totalAmount: newTotalAmount,
-        }
+      const existingCartItemIndexToDelete = state.items.findIndex(
+        (item) => item.id === action.id
+      );
+      const existingCartItemToDelete =
+        state.items[existingCartItemIndexToDelete];
+      const newTotalAmount = state.totalAmount - existingCartItemToDelete.price;
+      let newUpdatedItems;
+      if (existingCartItemToDelete.amount === 1) {
+        newUpdatedItems = state.items.filter((item) => item.id !== action.id);
+      } else {
+        const newUpdatedItem = {
+          ...existingCartItemToDelete,
+          amount: existingCartItemToDelete.amount - 1,
+        };
+        newUpdatedItems = [...state.items];
+        newUpdatedItems[existingCartItemIndexToDelete] = newUpdatedItem;
+      }
+      return {
+        items: newUpdatedItems,
+        totalAmount: newTotalAmount,
+      };
+    case 'CLEAR':
+      return defaultCartState;
     default:
       return defaultCartState;
   }
@@ -76,11 +81,18 @@ const CartProvider = (props) => {
     });
   };
 
+  const clearCartHandler = () => {
+    dispatchCartAction({
+      type: 'CLEAR',
+    });
+  };
+
   const cartContext = {
     items: cartState.items,
     totalAmount: cartState.totalAmount,
     addItem: addItemToCartHandler,
     removeItem: removeItemFromCartHandler,
+    clearCart: clearCartHandler,
   };
 
   return (

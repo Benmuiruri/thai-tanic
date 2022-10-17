@@ -27,14 +27,14 @@ const Cart = (props) => {
     setIsCheckout(true);
   };
 
-  const submitOrderHandler = () => {
+  const submitOrderHandler = async (userData) => {
     setIsSubmitting(true);
-    fetch(
-      'hps://react-db-connection-f78e5-default-rtdb.firebaseio.com/orders.json',
+    const response = await fetch(
+      'https://react-db-connection-f78e5-default-rtdb.firebaseio.com//thai-tanic/orders.json',
       {
         method: 'POST',
         body: JSON.stringify({
-          user: cartCtx.user,
+          user: userData,
           orderedItems: cartCtx.items,
         }),
       }
@@ -42,6 +42,7 @@ const Cart = (props) => {
       .then((response) => {
         setIsSubmitting(false);
         setDidSubmit(true);
+        cartCtx.clearCart();
       })
       .catch((error) => {
         setIsSubmitting(false);
@@ -89,11 +90,14 @@ const Cart = (props) => {
     </>
   );
 
-  const isSubmittingModalContent = <p>Sending order data...</p>;
+  const isSubmittingModalContent = <p>Hold on, submitting the order ...</p>;
 
   const didSubmitModalContent = (
     <>
-      <p>Successfully sent the order!</p>
+      <p>
+        Successfully sent the order! You will receive a confirmation email with
+        the details
+      </p>
       <div className={classes.actions}>
         <button className={classes.button} onClick={props.onClose}>
           Close
@@ -104,7 +108,7 @@ const Cart = (props) => {
 
   return (
     <Modal onClose={props.onClose}>
-      {!isSubmitting && !didSubmit && cartModalContent}
+      {!isSubmitting && !didSubmit && !httpError && cartModalContent}
       {isSubmitting && isSubmittingModalContent}
       {!isSubmitting && didSubmit && didSubmitModalContent}
       {!isSubmitting && httpError && (
