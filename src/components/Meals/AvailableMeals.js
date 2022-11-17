@@ -13,7 +13,7 @@ const AvailableMeals = () => {
   useEffect(() => {
     const fetchMeals = async () => {
       const response = await fetch(
-        'https://react-db-connection-f78e5-default-rtdb.firebaseio.com/thai-tanic/meals.json'
+        'https://thai-tanic-396fc-default-rtdb.firebaseio.com/thai-tanic/meals.json'
       );
 
       if (!response.ok) {
@@ -21,6 +21,7 @@ const AvailableMeals = () => {
       }
 
       const responseData = await response.json();
+      console.log(responseData);
 
       const loadedMeals = [];
 

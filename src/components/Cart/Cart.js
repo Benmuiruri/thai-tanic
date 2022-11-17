@@ -30,7 +30,7 @@ const Cart = (props) => {
   const submitOrderHandler = async (userData) => {
     setIsSubmitting(true);
     const response = await fetch(
-      'https://react-db-connection-f78e5-default-rtdb.firebaseio.com//thai-tanic/orders.json',
+      'https://thai-tanic-396fc-default-rtdb.firebaseio.com/thai-tanic/orders.json',
       {
         method: 'POST',
         body: JSON.stringify({
