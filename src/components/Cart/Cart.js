@@ -29,7 +29,7 @@ const Cart = (props) => {
 
   const submitOrderHandler = async (userData) => {
     setIsSubmitting(true);
-    const response = await fetch(
+    fetch(
       'https://thai-tanic-396fc-default-rtdb.firebaseio.com/thai-tanic/orders.json',
       {
         method: 'POST',
@@ -39,7 +39,7 @@ const Cart = (props) => {
         }),
       }
     )
-      .then((response) => {
+      .then(() => {
         setIsSubmitting(false);
         setDidSubmit(true);
         cartCtx.clearCart();
