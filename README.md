@@ -45,10 +45,6 @@ Feel free to check the [issues page](https://github.com/Benmuiruri/thai-tanic/is
 
 Give a ⭐️ if you like this project!
 
-# Acknowledgement
-
-- Hat tip to [@max](https://twitter.com/maxedapps)
-
 # 📝 License
 
 This project is [MIT](./MIT.md) licensed.
